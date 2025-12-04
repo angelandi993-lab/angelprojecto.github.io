@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MODA URBANA</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding-top: 70px;
+    color: #333;
+    text-align: center;
+}
+
+nav.menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #222;
+    z-index: 1000;
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.menu-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ff6f61;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menu-items {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.menu-items a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* --- ESTILOS PARA LA BARRA DE BÚSQUEDA --- */
+.search-bar-li {
+    display: flex;
+    align-items: center;
+    margin: 0 10px; 
+}
+
+#search-input {
+    padding: 8px 12px;
+    border: 1px solid #ff6f61;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 200px;
+    background-color: #333;
+    color: white;
+    transition: border-color 0.3s;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: #f7a9a2;
+}
+
+#search-input::placeholder {
+    color: #ccc;
+}
+/* --- FIN ESTILOS BÚSQUEDA --- */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #333;
+    top: 30px;
+    left: 0;
+    min-width: 150px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.dropdown.active .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    padding: 10px;
+    display: block;
+    text-align: left;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background: #ff6f61;
+}
+
+#cart-icon {
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    color: white;
+}
+
+#cart-count {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: #ff6f61;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+#cart-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+    z-index: 2000;
+    padding: 20px;
+    transition: right 0.4s ease;
+    overflow-y: auto;
+}
+
+#cart-overlay {
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    z-index:1500;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.cart-item img {
+    width: 70px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cart-item-info b {
+    margin-bottom: 4px;
+}
+
+.cart-item-price {
+    font-weight: bold;
+    min-width: 60px;
+    text-align: right;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.qty-btn {
+    padding: 4px 8px;
+    border: none;
+    background: #ff6f61;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cart-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-buttons button {
+    width: 48%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-seguir {
+    background: white;
+    border: 2px solid #ff6f61;
+    color: #ff6f61;
+}
+
+.btn-continuar {
+    background: #0066ff;
+    color: white;
+}
+
+.galeria-inicio {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.galeria-inicio img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.item {
+    background: white;
+    width: 250px;
+    border-radius: 10px;
+    padding: 12px;
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+}
+
+.item img {
+    border-radius: 8px;
+    cursor: pointer; /* Añadir cursor para indicar que es clickeable */
+}
+
+.btn {
+    background: #ff6f61;
+    padding: 10px 15px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+/* --- ESTILOS MODAL VISTA RÁPIDA (Reemplaza el popup anterior) --- */
+#modal-producto, #popup-cookies {
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    z-index:3000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: white;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.modal-imagen {
+    width: 40%;
+    background-color: #f8f8f8;
+}
+
+.modal-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-detalles {
+    width: 60%;
+    padding: 30px;
+    text-align: left;
+}
+
+.modal-detalles h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #222;
+}
+
+.modal-detalles p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.modal-detalles .precio {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff6f61;
+    margin-bottom: 25px;
+}
+
+.modal-opciones label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-opciones select, .modal-opciones input[type="number"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.btn-agregar-modal {
+    background: #0066ff;
+    padding: 12px 25px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 30px;
+    width: 100%;
+    font-size: 18px;
+}
+/* --- FIN ESTILOS MODAL VISTA RÁPIDA --- */
+
+
+/* Estilos para el popup de Cookies (mantener) */
+.popup-box {
+    background: white;
+    width: 90%;
+    max-width: 350px;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.popup-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-buttons button {
+    width: 48%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-si { background: #28a745; color: white; }
+.btn-no { background: #dc3545; color: white; }
+
+footer{
+    margin-top: 40px;
+    background: #222;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+}
+</style>
+</head>
+<body>
+
+<div id="modal-producto">
+    <div class="modal-box">
+        <span class="modal-close" onclick="cerrarModalProducto()">✖</span>
+        <div class="modal-imagen">
+            <img id="modal-img" src="" alt="Imagen del producto">
+        </div>
+        <div class="modal-detalles">
+            <h2 id="modal-nombre"></h2>
+            <p id="modal-descripcion"></p>
+            <div class="precio" id="modal-precio"></div>
+
+            <div class="modal-opciones">
+                <label for="modal-talla">Selecciona la talla:</label>
+                <select id="modal-talla"></select>
+
+                <label for="modal-cantidad">Cantidad:</label>
+                <input type="number" id="modal-cantidad" value="1" min="1" max="10" onchange="limitarCantidad(this)">
+            </div>
+
+            <button class="btn-agregar-modal" id="btn-agregar-carrito">AGREGAR AL CARRITO</button>
+        </div>
+    </div>
+</div>
+<div id="popup-cookies">
+    <div class="popup-box">
+        <h3>Antes de empezar a comprar</h3>
+        <p>Utilizamos cookies para mejorar su experiencia. No recopilamos información personal.</p>
+        <div class="popup-buttons">
+            <button class="btn-si" onclick="aceptarCookies()">Aceptar cookies</button>
+            <button class="btn-no" onclick="denegarCookies()">Denegar cookies</button>
+        </div>
+    </div>
+</div>
+
+<nav class="menu">
+<div class="menu-container">
+<div class="logo" onclick="volverInicio()">MODA URBANA</div>
+<ul class="menu-items">
+    <li class="dropdown">
+        <a>Hombre ▾</a>
+        <ul class="dropdown-content">
+            <li><a onclick="mostrarGaleria('camisas_h')">Camisas</a></li>
+            <li><a onclick="mostrarGaleria('pantalones_h')">Pantalones</a></li>
+            <li><a onclick="mostrarGaleria('chaquetas_h')">Chaquetas</a></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a>Niños ▾</a>
+        <ul class="dropdown-content">
+            <li><a onclick="mostrarGaleria('camisas_n')">Camisas</a></li>
+            <li><a onclick="mostrarGaleria('pantalones_n')">Pantalones</a></li>
+            <li><a onclick="mostrarGaleria('chaquetas_n')">Chaquetas</a></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a>Mujer ▾</a>
+        <ul class="dropdown-content">
+            <li><a onclick="mostrarGaleria('camisas_m')">Camisas</a></li>
+            <li><a onclick="mostrarGaleria('pantalones_m')">Pantalones</a></li>
+            <li><a onclick="mostrarGaleria('chaquetas_m')">Chaquetas</a></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a>Niñas ▾</a>
+        <ul class="dropdown-content">
+            <li><a onclick="mostrarGaleria('camisas_nn')">Camisas</a></li>
+            <li><a onclick="mostrarGaleria('pantalones_nn')">Pantalones</a></li>
+            <li><a onclick="mostrarGaleria('chaquetas_nn')">Chaquetas</a></li>
+        </ul>
+    </li>
+
+    <li class="search-bar-li">
+        <input type="text" id="search-input" placeholder="Buscar productos..." onkeyup="buscarProductos()">
+    </li>
+
+    <li id="cart-icon" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span></li>
+</ul>
+</div>
+</nav>
+
+<div id="cart-overlay" onclick="cerrarCarrito()"></div>
+<div id="cart-panel">
+<div class="cart-header">
+    <span>Mi carrito</span>
+    <span style="cursor:pointer;" onclick="cerrarCarrito()">✖</span>
+</div>
+<div id="cart-items"></div>
+<div class="cart-buttons">
+    <button class="btn-seguir" onclick="cerrarCarrito()">Seguir comprando</button>
+    <button class="btn-continuar">Continuar</button>
+</div>
+</div>
+
+<section id="galeria-inicio" class="galeria-inicio"></section>
+<section id="galeria-productos"></section>
+
+<script>
+// Modificada para siempre retornar las tallas XS a XL como se solicitó
+function obtenerTallas(cat) {
+    // Si bien no es ideal para ropa de niño, el requerimiento es XS a XL para todos
+    return ["XS", "S", "M", "L", "XL"];
+}
+
+
+const productos = [
+    // ----------------------------------------------------------------------
+    // CATEGORÍA HOMBRE (12 Productos)
+    // ----------------------------------------------------------------------
+    // Camisas HOMBRE (4)
+    {id:1, nombre:"Camisa Casual Slim Hombre", categoria:"camisas_h", descripcion:"Tela ligera y moderna para un look urbano.", precio:30, img:"https://www.ubuy.ec/productimg/?image=aHR0cHM6Ly9pbWFnZXMtbmEuc3NsLWltYWdlcy1hbWF6b24uY29tL2ltYWdlcy9JLzYxQ3ktYXJLMHpMLl9TUzQwMF8uanBn.jpg"},
+    {id:2, nombre:"Camisa Denim Street Hombre", categoria:"camisas_h", descripcion:"Estilo vaquero oscuro, ideal para la noche.", precio:45, img:" https://www.buds.com.co/cdn/shop/files/CamisaDenimOversizeIMG_6076.jpg?v=1752005246&width=1946"},
+    {id:3, nombre:"Camisa Estampada Graf Hombre", categoria:"camisas_h", descripcion:"Diseño con gráficos urbanos y corte holgado.", precio:38, img:"https://img.kwcdn.com/product/fancy/c0ebdea9-9ee8-443e-8ae4-f29631804da1.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"},
+    {id:4, nombre:"Camisa a Cuadros Roja Hombre", categoria:"camisas_h", descripcion:"Clásico de franela, perfecto para capas.", precio:32, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNtM6uU4V5R_O6t4AtV5J_rTZORBrvfrxJpw&s"},
+    // Pantalones HOMBRE (4)
+    {id:5, nombre:"Pantalón Cargo Urbano Hombre", categoria:"pantalones_h", descripcion:"Con múltiples bolsillos, máxima comodidad.", precio:55, img:"https://m.media-amazon.com/images/I/51pzg29HR-L._AC_SY1000_.jpg"},
+    {id:6, nombre:"Jogger Deportivo Negro Hombre", categoria:"pantalones_h", descripcion:"Elástico y ligero, ideal para el movimiento.", precio:45, img:"https://statics.tipti.market/images-ec/542f5ffb-6d2c-43b2-9423-3b7e6d407c70.jpg"},
+    {id:7, nombre:"Pantalón Skinny Gris Hombre", categoria:"pantalones_h", descripcion:"Corte ajustado para un look moderno y definido.", precio:40, img:"https://chevignonec.vtexassets.com/arquivos/ids/685383/63_331G012_GRI145002_0.jpg?v=638841564100970000"},
+    {id:8, nombre:"Jeans Clásicos Hombre", categoria:"pantalones_h", descripcion:"Denim resistente, color azul tradicional.", precio:50, img:"https://americaneagleecuador.vtexassets.com/arquivos/ids/7867525-500-auto?v=638972647373730000&width=500&height=auto&aspect=true"},
+    // Chaquetas HOMBRE (4)
+    {id:9, nombre:"Chaqueta Bomber Negra Hombre", categoria:"chaquetas_h", descripcion:"Estilo clásico, ligera y con cierre frontal.", precio:65, img:"https://koaj.ec/235276-big_default/chaqueta-bomber-negra-ajustada-con-manga-ranglan.jpg"},
+    {id:10, nombre:"Sudadera con Capucha Hombre", categoria:"chaquetas_h", descripcion:"Capucha ajustable, color gris carbón.", precio:50, img:"https://http2.mlstatic.com/D_NQ_NP_2X_641806-MEC88094954145_072025-N.webp"},
+    {id:11, nombre:"Chaqueta de Mezclilla Hombre", categoria:"chaquetas_h", descripcion:"Un clásico atemporal, lavado medio.", precio:60, img:"https://images-cdn.ubuy.co.in/65380ba9e86ef865334fcb14-men-denim-jacket-streetwear-hip-hop.jpg"},
+    {id:12, nombre:"Cazadora Puffer Hombre", categoria:"chaquetas_h", descripcion:"Acolchada y cálida, ideal para el frío.", precio:75, img:"https://media.gq.com.mx/photos/63938c1ce7bf0bd12833afdc/master/w_1600%2Cc_limit/chamarras-de-plumas-como-usar-en-invierno.jpg"},
+
+    // ----------------------------------------------------------------------
+    // CATEGORÍA NIÑOS (12 Productos)
+    // ----------------------------------------------------------------------
+    // Camisas NIÑOS (4)
+    {id:13, nombre:"Camiseta Dinosaurio Niño", categoria:"camisas_n", descripcion:"Camiseta de algodón con estampado divertido.", precio:20, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0cV9WyV8ZL_V4enq8W1e84XXrEp8Q_yqLpQ&s"},
+    {id:14, nombre:"Polo Rayado Azul Niño", categoria:"camisas_n", descripcion:"Polo de cuello, ideal para salidas.", precio:25, img:"https://assets.theplace.com/image/upload/t_pdp_img_m,f_auto,q_auto/v1/ecom/assets/products/tcp/3007483/3007483_160.jpg"},
+    {id:15, nombre:"Camisa Manga Larga Básica Niño", categoria:"camisas_n", descripcion:"Color sólido, cómoda para jugar.", precio:18, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQibBuKg5cP51agPEkqHIwVQsFy-Xi3FtCynw&s"},
+    {id:16, nombre:"Camiseta Superhéroe Niño", categoria:"camisas_n", descripcion:"Con el diseño de su personaje favorito.", precio:22, img:"https://tottoecuador.vtexassets.com/arquivos/ids/346524/5.jpg?v=638876753635900000"},
+    // Pantalones NIÑOS (4)
+    {id:17, nombre:"Pantalón Chino Beige Niño", categoria:"pantalones_n", descripcion:"Corte casual, tela resistente para el día.", precio:28, img:"https://www.alvaromoreno.com/dw/image/v2/BGHK_PRD/on/demandware.static/-/Sites-amoreno_master_catalog/default/dw49ba9704/images/hi-res/I24/Kids/Pantalones/Pantalon_Chino_Kids_1236224503/BEI/1236224503_BEI_2.jpg?sw=965&sh=1287"},
+    {id:18, nombre:"Jeans Rectos Niño", categoria:"pantalones_n", descripcion:"Denim azul, cómodos y duraderos.", precio:32, img:"https://shop.mango.com/assets/rcs/pics/static/T8/fotos/S/87064798_TM_D5.jpg?imwidth=2048&imdensity=1&ts=1739531107778"},
+    {id:19, nombre:"Shorts Deportivos Niño", categoria:"pantalones_n", descripcion:"Malla transpirable, color verde neón.", precio:15, img:"https://images-na.ssl-images-amazon.com/images/I/51A3MyIIgkL._AC_UL375_SR375,375_.jpg"},
+    {id:20, nombre:"Pantalón Cargo Camuflado Niño", categoria:"pantalones_n", descripcion:"Diseño de camuflaje, estilo aventurero.", precio:35, img:"https://m.media-amazon.com/images/I/61+9f1m06nS._AC_UY1000_.jpg"},
+    // Chaquetas NIÑOS (4)
+    {id:21, nombre:"Chaqueta Cortavientos Niño", categoria:"chaquetas_n", descripcion:"Ligera y resistente al viento, para exteriores.", precio:30, img:"https://resize.sprintercdn.com/b/1504x2256/products/0400825/softshell-boriken_0400825_00_5_928711494.jpg?w=1504&q=75"},
+    {id:22, nombre:"Sudadera con Cremallera Niño", categoria:"chaquetas_n", descripcion:"Felpa suave, con capucha y cierre completo.", precio:25, img:"https://img.kwcdn.com/product/open/79886eadbdcc4653a6700f178874c6a0-goods.jpeg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"},
+    {id:23, nombre:"Chaleco Acolchado Niño", categoria:"chaquetas_n", descripcion:"Sin mangas, ideal para días frescos.", precio:22, img:"https://shop.mango.com/assets/rcs/pics/static/T8/fotos/S/87083280_35.jpg?imwidth=2048&imdensity=1&ts=1734440714834"},
+    {id:24, nombre:"Chaqueta de Jean Niño", categoria:"chaquetas_n", descripcion:"Clásico de jean con parches divertidos.", precio:38, img:"https://shop.mango.com/assets/rcs/pics/static/T6/fotos/S/67064448_TC.jpg?imwidth=2048&imdensity=1&ts=1707294814715"},
+
+    // ----------------------------------------------------------------------
+    // CATEGORÍA MUJER (12 Productos)
+    // ----------------------------------------------------------------------
+    // Camisas MUJER (4)
+    {id:25, nombre:"Blusa de Seda Mujer", categoria:"camisas_m", descripcion:"Elegante y ligera, perfecta para la oficina o noche.", precio:45, img:"https://m.media-amazon.com/images/I/61bW53NeLXL._AC_UF894,1000_QL80_.jpg"},
+    {id:26, nombre:"Top Crop de Malla Mujer", categoria:"camisas_m", descripcion:"Estilo atrevido, ideal para un look de festival.", precio:30, img:"https://img.kwcdn.com/product/open/10b7591205f34a6fa191fce0c256b28d-goods.jpeg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"},
+    {id:27, nombre:"Camisa Oversize Blanca Mujer", categoria:"camisas_m", descripcion:"Corte amplio y moderno, versátil.", precio:35, img:"https://hips.hearstapps.com/hmg-prod/images/gettyimages-2162522948-669e420fceeca.jpg?crop=0.668xw:1.00xh;0.143xw,0&resize=1200:*"},
+    {id:28, nombre:"Blusa con Encaje Mujer", categoria:"camisas_m", descripcion:"Detalle delicado en el escote y mangas.", precio:40, img:"https://http2.mlstatic.com/D_NQ_NP_2X_706823-MEC84097560032_052025-N.webp"},
+    // Pantalones MUJER (4)
+    {id:29, nombre:"Pantalón Wide Leg Mujer", categoria:"pantalones_m", descripcion:"Pierna ancha, tela fluida y cómoda.", precio:50, img:"https://hips.hearstapps.com/hmg-prod/images/como-llevar-bien-los-vaqueros-wide-leg-24-6738d65bed9ca.jpg?resize=980:*"},
+    {id:30, nombre:"Leggings Deportivos Mujer", categoria:"pantalones_m", descripcion:"Alta compresión, control de abdomen.", precio:35, img:"https://leonisa.ec/cdn/shop/files/S67459C_700_1200X1500_1_380x.jpg?v=1759182970"},
+    {id:31, nombre:"Jeans High Rise Mujer", categoria:"pantalones_m", descripcion:"Corte a la cintura, denim elástico.", precio:45, img:"https://chevignonec.vtexassets.com/arquivos/ids/644854-800-auto?v=638603760203630000&width=800&height=auto&aspect=true"},
+    {id:32, nombre:"Pantalón de Cuero Sintético Mujer", categoria:"pantalones_m", descripcion:"Estilo 'rocker' negro, acabado brillante.", precio:55, img:"https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/05e5e2dee81d9a7cd53645bbe633d0c0.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"},
+    // Chaquetas MUJER (4)
+    {id:33, nombre:"Blazer Oversize Mujer", categoria:"chaquetas_m", descripcion:"Estilo elegante, color pastel, perfecto para capas.", precio:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjjp5KgiWEVo6-2nBm2nv8GxIvrJB7965XOg&s"},
+    {id:34, nombre:"Chaqueta Biker de Cuero Mujer", categoria:"chaquetas_m", descripcion:"Clásico de motociclista con cremalleras.", precio:85, img:"https://nafnafec.vtexassets.com/arquivos/ids/294537/14_522G085_NEG193909_0.jpg?v=638930440872300000"},
+    {id:35, nombre:"Gabardina Clásica Mujer", categoria:"chaquetas_m", descripcion:"Larga y elegante, color beige.", precio:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGn0CeLSWnsHApoW06VIfkrswsd6Ht1kdV0g&s"},
+    {id:36, nombre:"Chaqueta Deportiva Rosa Mujer", categoria:"chaquetas_m", descripcion:"Chaqueta con cierre, ideal para el gym o streetwear.", precio:55, img:"https://img.kwcdn.com/product/fancy/d94f4fce-4068-47a5-9cd5-e8270fbfe5ce.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"},
+
+    // ----------------------------------------------------------------------
+    // CATEGORÍA NIÑAS (12 Productos)
+    // ----------------------------------------------------------------------
+    // Camisas NIÑAS (4)
+    {id:37, nombre:"Blusa de Flores Niña", categoria:"camisas_nn", descripcion:"Estampado floral colorido, tejido suave.", precio:25, img:"https://www.vertbaudet.es/fstrz/r/s/media.vertbaudet.es/Pictures/vertbaudet/269664/blusa-con-estampado-de-flores-para-nina.jpg?width=457"},
+    {id:38, nombre:"Camiseta Unicornio Niña", categoria:"camisas_nn", descripcion:"Estampado de fantasía con brillo.", precio:22, img:"https://m.media-amazon.com/images/I/51D-ybwJG8L._AC_UY1000_.jpg"},
+    {id:39, nombre:"Polo con Volantes Niña", categoria:"camisas_nn", descripcion:"Detalles de volantes en las mangas, color rosa.", precio:28, img:"https://assets.theplace.com/image/upload/t_pdp_img_m,f_auto,q_auto/v1/ecom/assets/products/gym/3030589/3030589_1464.jpg"},
+    {id:40, nombre:"Top con Lentejuelas Niña", categoria:"camisas_nn", descripcion:"Brillo y diversión para ocasiones especiales.", precio:30, img:"https://images-na.ssl-images-amazon.com/images/I/71vElwoNcyL._AC_UL600_SR600,600_.jpg"},
+    // Pantalones NIÑAS (4)
+    {id:41, nombre:"Pantalón Jogger con Corazones Niña", categoria:"pantalones_nn", descripcion:"Felpa cómoda con pequeños estampados.", precio:25, img:"https://www.modarm.com/medias/000005000000876592-1200x1200-0.jpg?context=bWFzdGVyfGltYWdlc3w0NTg0MjN8aW1hZ2UvanBlZ3xhR1V5TDJoaFlpOHhNelkzTmprNE56STFNamMyTmk4d01EQXdNRFV3TURBd01EQTROelkxT1RJdE1USXdNSGd4TWpBd1h6QXVhbkJufDgwYzc1NzEzYmUzNTUzM2I5MjFkZjk5NDk2Zjc5NTFhMjVhMzQ5ZjVmZGQ1ZmI4MDdmZGU5Y2ExMDMzODg0MWM"},
+    {id:42, nombre:"Jeans Rotos Niña", categoria:"pantalones_nn", descripcion:"Estilo moderno con detalles rasgados.", precio:30, img:"https://i5.walmartimages.com/asr/10435194-903e-44a2-a0c6-fc9753c896b5.3f468494d321b1ea71d21152a3fd094f.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"},
+    {id:43, nombre:"Leggings Brillantes Niña", categoria:"pantalones_nn", descripcion:"Acabado metálico en color rosa chicle.", precio:20, img:"https://m.media-amazon.com/images/I/61jiJe9n92L._UY350_.jpg"},
+    {id:44, nombre:"Pantalón de Lona Niña", categoria:"pantalones_nn", descripcion:"Tejido resistente, color amarillo suave.", precio:27, img:"https://tennisecuador.vtexassets.com/arquivos/ids/684219/jeans-para-ni%C3%B1a-tennis-azul.jpg?v=638346641007400000"},
+    // Chaquetas NIÑAS (4)
+    {id:45, nombre:"Chaqueta Peluche con Orejas Niña", categoria:"chaquetas_nn", descripcion:"Suave y abrigadora, con orejas en la capucha.", precio:35, img:"https://m.media-amazon.com/images/I/71328NCVytL._AC_UY1000_.jpg"},
+    {id:46, nombre:"Chaqueta Denim con Parches Niña", categoria:"chaquetas_nn", descripcion:"Clásico de jean con divertidos parches de colores.", precio:40, img:"https://http2.mlstatic.com/D_Q_NP_2X_765196-MEC88160917562_072025-N.webp"},
+    {id:47, nombre:"Sudadera Glitter Niña", categoria:"chaquetas_nn", descripcion:"Brillos en el tejido, estilo cómodo y chic.", precio:28, img:"https://contents.mediadecathlon.com/m23443306/k$4de73fb3abdc6237fef1dfcd299fbcd3/picture.jpg?format=auto&f=3000x0"},
+    {id:48, nombre:"Chaqueta Impermeable Niña", categoria:"chaquetas_nn", descripcion:"Ligera, perfecta para los días de lluvia.", precio:32, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt9nDWGHN16FZZEr9JQ-8xZBg6I3gAYapprA&s"}
+];
+
+const inicio = document.getElementById("galeria-inicio");
+// Muestra 8 productos diferentes de ejemplo en la página de inicio
+productos.slice(0,8).forEach(p=>{
+    let img=document.createElement("img");
+    img.src=p.img;
+    // Ahora hacemos que la imagen abra el modal de detalle
+    img.style.pointerEvents = "none"; 
+    inicio.appendChild(img);
+});
+
+function mostrarGaleria(cat){
+    const cont=document.getElementById("galeria-productos");
+    cont.innerHTML="";
+    cont.style.display="block";
+    document.getElementById("galeria-inicio").style.display="none";
+
+    // Filtra y muestra todos los 4 productos de la categoría seleccionada
+    productos.filter(p=>cat==="todos"?true:p.categoria===cat).forEach(p=>{
+        let div=document.createElement("div");
+        div.className="item";
+        div.innerHTML=`
+            <img src="${p.img}" width="220" onclick='mostrarDetalleProducto(${p.id})'>
+            <h4>${p.nombre}</h4>
+            <p>${p.descripcion}</p>
+            <p><b>$${p.precio}</b></p>
+            <button class="btn" onclick='mostrarDetalleProducto(${p.id})'>Ver y agregar</button>
+        `;
+        cont.appendChild(div);
+    });
+}
+
+function buscarProductos() {
+    const textoBusqueda = document.getElementById("search-input").value.toLowerCase();
+    const cont = document.getElementById("galeria-productos");
+    cont.innerHTML = "";
+    cont.style.display = "block";
+    document.getElementById("galeria-inicio").style.display = "none";
+    
+    // Filtra productos por nombre o descripción que coincidan con la búsqueda
+    const resultados = productos.filter(p => 
+        p.nombre.toLowerCase().includes(textoBusqueda) ||
+        p.descripcion.toLowerCase().includes(textoBusqueda)
+    );
+
+    if (resultados.length > 0) {
+        resultados.forEach(p => {
+            let div = document.createElement("div");
+            div.className = "item";
+            div.innerHTML = `
+                <img src="${p.img}" width="220" onclick='mostrarDetalleProducto(${p.id})'>
+                <h4>${p.nombre}</h4>
+                <p>${p.descripcion}</p>
+                <p><b>$${p.precio}</b></p>
+                <button class="btn" onclick='mostrarDetalleProducto(${p.id})'>Ver y agregar</button>
+            `;
+            cont.appendChild(div);
+        });
+    } else {
+        cont.innerHTML = "<h3>No se encontraron productos que coincidan con su búsqueda.</h3>";
+    }
+}
+
+/* MODAL DETALLE DE PRODUCTO */
+let productoSeleccionado = null;
+function mostrarDetalleProducto(id){
+    const producto = productos.find(p => p.id === id);
+    productoSeleccionado = producto;
+
+    // 1. Llenar los campos del modal
+    document.getElementById("modal-img").src = producto.img;
+    document.getElementById("modal-nombre").innerText = producto.nombre;
+    document.getElementById("modal-descripcion").innerText = producto.descripcion;
+    document.getElementById("modal-precio").innerText = `$${producto.precio}`;
+    
+    // 2. Rellenar las tallas
+    const selectTalla = document.getElementById("modal-talla");
+    selectTalla.innerHTML = ''; // Limpiar opciones anteriores
+    obtenerTallas(producto.categoria).forEach(talla => {
+        let option = document.createElement('option');
+        option.value = talla;
+        option.textContent = talla;
+        selectTalla.appendChild(option);
+    });
+
+    // 3. Resetear cantidad a 1
+    document.getElementById("modal-cantidad").value = 1;
+
+    // 4. Mostrar el modal
+    document.getElementById("modal-producto").style.display = "flex";
+    
+    // 5. Configurar el botón de agregar
+    document.getElementById("btn-agregar-carrito").onclick = ()=>{
+        const tallaSeleccionada = selectTalla.value;
+        const cantidadSeleccionada = parseInt(document.getElementById("modal-cantidad").value);
+        
+        agregarAlCarrito(productoSeleccionado.id, tallaSeleccionada, cantidadSeleccionada);
+        cerrarModalProducto();
+    };
+}
+
+function cerrarModalProducto(){ 
+    document.getElementById("modal-producto").style.display = "none"; 
+}
+
+function limitarCantidad(input) {
+    if (parseInt(input.value) > 10) {
+        input.value = 10;
+    }
+    if (parseInt(input.value) < 1 || input.value === '') {
+        input.value = 1;
+    }
+}
+
+/* CARRITO */
+let carrito = [];
+function agregarAlCarrito(idProducto, talla, cantidad){
+    let producto = productos.find(p => p.id === idProducto);
+    
+    // Crea un ID único para el item: ID_PRODUCTO-TALLA
+    const itemId = `${idProducto}-${talla}`;
+    
+    let existe = carrito.find(p => p.itemId === itemId);
+    
+    if(existe){ 
+        existe.cantidad += cantidad; 
+    } else { 
+        // Clonar el objeto producto y añadirle la talla, cantidad y el itemId
+        carrito.push({
+            ...producto,
+            itemId: itemId,
+            talla: talla,
+            cantidad: cantidad
+        }); 
+    }
+    actualizarCarrito();
+    abrirCarrito();
+}
+
+function actualizarCarrito(){
+    let cont = document.getElementById("cart-items");
+    cont.innerHTML="";
+    let total = 0;
+    
+    if (carrito.length === 0) {
+        cont.innerHTML = "<p style='text-align:center; padding-top:20px;'>El carrito está vacío.</p>";
+    } else {
+        carrito.forEach((p,i)=>{
+            total += p.precio * p.cantidad;
+            let div=document.createElement("div");
+            div.className="cart-item";
+            div.innerHTML=`
+                <img src="${p.img}">
+                <div class="cart-item-info">
+                    <b>${p.nombre}</b>
+                    <span>Talla: ${p.talla}</span>
+                    <div class="qty-box">
+                        <button class="qty-btn" onclick="cambiarCantidad(${i},-1)">-</button>
+                        ${p.cantidad}
+                        <button class="qty-btn" onclick="cambiarCantidad(${i},1)">+</button>
+                    </div>
+                </div>
+                <div class="cart-item-price">
+                    $${(p.precio*p.cantidad).toFixed(2)}
+                    <button class="remove-btn" onclick="eliminar(${i})">🗑</button>
+                </div>
+            `;
+            cont.appendChild(div);
+        });
+        let totalDiv = document.createElement("div");
+        totalDiv.style.marginTop = "15px";
+        totalDiv.style.borderTop = "2px solid #333";
+        totalDiv.style.paddingTop = "10px";
+        totalDiv.style.textAlign = "right";
+        totalDiv.innerHTML = `<b>Total: $${total.toFixed(2)}</b>`;
+        cont.appendChild(totalDiv);
+    }
+    document.getElementById("cart-count").innerText = carrito.length;
+}
+
+function cambiarCantidad(i,valor){ 
+    carrito[i].cantidad += valor; 
+    if(carrito[i].cantidad<=0){ 
+        carrito.splice(i,1);
+    } 
+    actualizarCarrito();
+}
+
+function eliminar(i){ 
+    carrito.splice(i,1); 
+    actualizarCarrito();
+}
+
+function abrirCarrito(){ document.getElementById("cart-panel").style.right="0"; document.getElementById("cart-overlay").style.display="block";}
+function cerrarCarrito(){ document.getElementById("cart-panel").style.right="-420px"; document.getElementById("cart-overlay").style.display="none";}
+
+/* COOKIES */
+window.onload=()=>{ if(!localStorage.getItem("cookiesAceptadas")){ document.getElementById("popup-cookies").style.display="flex"; } };
+function aceptarCookies(){ localStorage.setItem("cookiesAceptadas","si"); document.getElementById("popup-cookies").style.display="none";}
+function denegarCookies(){ document.getElementById("popup-cookies").style.display="none";}
+
+/* VOLVER INICIO */
+function volverInicio(){ 
+    document.getElementById("galeria-inicio").style.display="grid"; 
+    document.getElementById("galeria-productos").style.display="none"; 
+    document.getElementById("search-input").value = "";
+    window.scrollTo(0,0); 
+}
+
+/* DROPDOWN MENU */
+document.querySelectorAll('.dropdown > a').forEach(a=>{
+    a.addEventListener('click', e=>{
+        e.preventDefault();
+        const dropdown = a.parentElement;
+        dropdown.classList.toggle('active');
+    });
+});
+document.addEventListener('click', e=>{
+    document.querySelectorAll('.dropdown').forEach(drop=>{
+        if(!drop.contains(e.target)){ drop.classList.remove('active'); }
+    });
+});
+</script>
+
+<footer>© 2025 Moda Urbana – Todos los derechos reservados | Desarrollado por Angel Andino</footer>
+</body>
+</html>
