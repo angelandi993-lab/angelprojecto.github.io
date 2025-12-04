@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MODA URBANA</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
+// ModificadOOOOOOOO
 <style>
 body {
     font-family: 'Roboto', Arial, sans-serif;
@@ -56,7 +56,7 @@ nav.menu {
     cursor: pointer;
 }
 
-/* --- ESTILOS PARA LA BARRA DE BÚSQUEDA --- */
+/* --- BARRA DE BÚSQUEDA --- */
 .search-bar-li {
     display: flex;
     align-items: center;
@@ -82,7 +82,7 @@ nav.menu {
 #search-input::placeholder {
     color: #ccc;
 }
-/* --- FIN ESTILOS BÚSQUEDA --- */
+/* --- FIN BÚSQUEDA --- */
 
 .dropdown {
     position: relative;
@@ -133,6 +133,7 @@ nav.menu {
     font-size: 12px;
 }
 
+/* PANEL DEL CARRITO */
 #cart-panel {
     position: fixed;
     top: 0;
@@ -251,6 +252,7 @@ nav.menu {
     color: white;
 }
 
+/* GALERÍA INICIO */
 .galeria-inicio {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -260,25 +262,39 @@ nav.menu {
 
 .galeria-inicio img {
     width: 100%;
-    height: 380px;
+    height: 380px;     /* UNIFORME */
     object-fit: cover;
     border-radius: 10px;
     cursor: pointer;
 }
 
+/* TARJETAS ALINEADAS */
 .item {
     background: white;
     width: 250px;
+    height: 430px;   /* ALTO FIJO PARA ALINEAR */
     border-radius: 10px;
     padding: 12px;
     display: inline-block;
     margin: 10px;
     text-align: center;
+    overflow: hidden;
 }
 
 .item img {
+    width: 100%;
+    height: 280px;   /* UNIFORME */
+    object-fit: cover;
     border-radius: 8px;
-    cursor: pointer; /* Añadir cursor para indicar que es clickeable */
+    cursor: pointer;
+}
+
+/* PARA GALERÍAS DE CATEGORÍAS */
+#galeria-productos img {
+    width: 100%;
+    height: 280px;   /* UNIFORME */
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 .btn {
@@ -292,7 +308,7 @@ nav.menu {
     margin-top: 8px;
 }
 
-/* --- ESTILOS MODAL VISTA RÁPIDA (Reemplaza el popup anterior) --- */
+/* MODAL */
 #modal-producto, #popup-cookies {
     display: none;
     position: fixed;
@@ -332,8 +348,8 @@ nav.menu {
 }
 
 .modal-imagen img {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     object-fit: cover;
 }
 
@@ -390,10 +406,8 @@ nav.menu {
     width: 100%;
     font-size: 18px;
 }
-/* --- FIN ESTILOS MODAL VISTA RÁPIDA --- */
 
-
-/* Estilos para el popup de Cookies (mantener) */
+/* POPUP COOKIES */
 .popup-box {
     background: white;
     width: 90%;
@@ -404,10 +418,22 @@ nav.menu {
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 .popup-buttons {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
 }
 
 .popup-buttons button {
@@ -429,7 +455,32 @@ footer{
     color: white;
     font-size: 15px;
 }
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
+
 </style>
+
 </head>
 <body>
 
@@ -456,6 +507,7 @@ footer{
         </div>
     </div>
 </div>
+
 <div id="popup-cookies">
     <div class="popup-box">
         <h3>Antes de empezar a comprar</h3>
@@ -533,9 +585,8 @@ footer{
 <section id="galeria-productos"></section>
 
 <script>
-// Modificada para siempre retornar las tallas XS a XL como se solicitó
+// Modificada para siempre retornar las tallas XS a XL
 function obtenerTallas(cat) {
-    // Si bien no es ideal para ropa de niño, el requerimiento es XS a XL para todos
     return ["XS", "S", "M", "L", "XL"];
 }
 
@@ -844,3 +895,5 @@ document.addEventListener('click', e=>{
 <footer>© 2025 Moda Urbana – Todos los derechos reservados | Desarrollado por Angel Andino</footer>
 </body>
 </html>
+
+
